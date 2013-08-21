@@ -29,7 +29,7 @@ function processInbox(doAll, labelPrefix) {
 
   // Get our contact object.
   Logger.log('We are: ' + Session.getActiveUser().getEmail());
-  var ourContact = ContactsApp.getContact(Session.getActiveUser().getEmail());
+  var ourAliases = GmailApp.getAliases();
 
   // Loop all threads.
   for (var i = 0; i < threads.length; i++) {
@@ -77,7 +77,7 @@ function processInbox(doAll, labelPrefix) {
       // Check that the contact exists.
       if (contact != null) {
         // Check that it isn't us.
-        if (ourContact.getPrimaryEmail() == contact.getPrimaryEmail()) {
+        if (ourAliases.indexOf(contact.getPrimaryEmail()) >= 0) {
           Logger.log('        Ignoring contact: ' + contact.getPrimaryEmail());
           continue;
         }
